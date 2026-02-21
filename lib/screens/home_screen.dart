@@ -196,23 +196,25 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => DefaultTabController(
-        length: 3,
+        length: 4,
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          title: const Text('دليل الاستخدام المطور', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('دليل الاستخدام المطور والعميق', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           content: SizedBox(
-            width: 500,
-            height: 400,
+            width: 600,
+            height: 500,
             child: Column(
               children: [
                 const TabBar(
+                  isScrollable: true,
                   labelColor: Color(0xFF4F46E5),
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: Color(0xFF4F46E5),
                   tabs: [
-                    Tab(text: 'الخزائن'),
-                    Tab(text: 'العمليات'),
-                    Tab(text: 'البطاقات'),
+                    Tab(text: 'الخزائن الاستراتيجية'),
+                    Tab(text: 'هيكل العمليات'),
+                    Tab(text: 'إدارة البطاقات'),
+                    Tab(text: 'التقارير والأمان'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -220,19 +222,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TabBarView(
                     children: [
                       _buildHelpContent(
-                        'إدارة الخزائن',
-                        'الخزائن هي الأوعية المالية الرئيسية في النظام. يمكنك إنشاء خزنة لكل عملة أو لكل غرض (خزنة رئيسية، محل، مصروفات شخصية).\n\n• أهمية الخزنة: تتبع الرصيد الفعلي المتاح.\n• التحويلات: يمكنك نقل الأموال بين الخزائن بسهولة.',
+                        'فلسفة إدارة الخزائن',
+                        'الخزائن في هذا النظام ليست مجرد "حصالة" رقمية، بل هي حاويات استراتيجية لأصولك المالية.\n\n'
+                        '• تنظيم الأصول: يُنصح بإنشاء خزنة مستقلة لكل نوع من الأموال (مثلاً: خزنة للنقد السائل، خزنة للمدخرات، وخزنة للعملات الأجنبية).\n'
+                        '• الرصيد الافتتاحي: عند إنشاء خزنة، الرصيد الذي تضعه هو "الحقيقة المالية" التي يبدأ منها النظام حساباته.\n'
+                        '• الرقابة الذاتية: الرصيد الإجمالي الذي تراه في الواحدة هو المرجعية الكبرى؛ أي اختلاف بين الواقع والتطبيق يعني وجود عملية (سحب أو إيداع) لم تُوثق، مما يساعدك على الانضباط المالي.',
                         Ionicons.wallet_outline,
                       ),
                       _buildHelpContent(
-                        'إدارة العمليات',
-                        'هذا قسم يسجل حركات الأموال (إيداع، سحب، تحويل).\n\n• الإيداع: زيادة رصيد الخزنة.\n• السحب: تسجيل المصروفات.\n• التحويل: الربط بين خزنتين.\n• التتبع: يمكنك البحث عن أي عملية سابقة بالتاريخ والنوع.',
+                        'هيكل العمليات والدورة المالية',
+                        'العمليات هي المحرك الذي يغير مستويات السيولة في خزائنك وبطاقاتك.\n\n'
+                        '• الإيداع (Incomes): يمثل أي تدفق مالي داخل إلى منظومتك. تأكد من تحديد الخزنة الصحيحة وتوثيق التاريخ بدقة.\n'
+                        '• السحب (Expenses): تتبع دقيق للمصروفات. النظام يحلل هذه البيانات لاحقاً لإظهار الرسوم البيانية لمصروفاتك.\n'
+                        '• التحويل (Transfer): هو عملية مزدوجة آمنة؛ يقوم النظام بخصم المبلغ من "خزنة المصدر" وإضافته فوراً إلى "خزنة الهدف" في خطوة واحدة، مما يمنع ضياع المبالغ أثناء النقل اليدوي.\n'
+                        '• مركز العمليات (Hub): صُمم ليكون أسرع وسيلة لإدخال البيانات دون التنقل بين الشاشات، مما يحافظ على استمرارية عملك.',
                         Ionicons.swap_horizontal_outline,
                       ),
                       _buildHelpContent(
-                        'إدارة البطاقات',
-                        'البطاقات هي بطاقات الدفع أو الفيزا المرتبطة بخزنة معينة.\n\n• الربط: كل بطاقة تسحب من رصيد خزنة محددة.\n• الاستخدام: لتسهيل إدارة البطاقات البنكية ومعرفة رصيد كل منها بشكل منفصل داخل الخزنة الواحدة.',
+                        'إدارة البطاقات والتكامل البنكي',
+                        'البطاقات هي واجهات دفع رقمية ترتبط بشكل مباشر بمصادر السيولة.\n\n'
+                        '• الربط الذكي: كل بطاقة يتم إنشاؤها يجب أن ترتبط بـ "خزنة مصدر" (غالباً ما تكون خزنة البنك). أي عملية شراء عبر البطاقة ستنعكس تلقائياً كخصم من تلك الخزنة.\n'
+                        '• تتبع الأرصدة المتعددة: يمكنك امتلاك 10 بطاقات مرتبطة بخزنة بنكية واحدة، وسيوضح لك النظام رصيد كل بطاقة بشكل مستقل، مع الحفاظ على توازن الخزنة الأم.\n'
+                        '• المطابقة البنكية: استخدم سجل البطاقة لمطابقة كشوفات حسابك البنكي الفعلي مع ما سجلته يدوياً، لتكتشف أي عمولات بنكية أو عمليات تكرار غير مقصودة في الواقع.',
                         Ionicons.card_outline,
+                      ),
+                      _buildHelpContent(
+                        'التقارير، الذكاء المالي والأمان',
+                        'هذا هو العقل المدبر للنظام الذي يحلل ما قمت بإدخاله.\n\n'
+                        '• لوحة التحكم (Dashboard): تقدم لك رؤية 360 درجة لثروتك الإجمالية ومعدلات الصرف الشهري.\n'
+                        '• الأمان والخصوصية: بياناتك مشفرة ومحفوظة محلياً على جهازك. لا أحد يملك الوصول إليها إلا أنت.\n'
+                        '• النسخ الاحتياطي: في الإعدادات، يمكنك تصدير الملف الكامل لقاعدة البيانات. يُنصح بعمل ذلك دورياً وحفظ الملف في مكان آمن (مثل Google Drive) لضمان عدم ضياع حساباتك في حال تعطل الجهاز أو مسح التطبيق.\n'
+                        '• وضع التفعيل: الرموز التي تدخلها هي هويتك الرقمية التي تفتح لك كامل مميزات النظام مدى الحياة.',
+                        Ionicons.shield_checkmark_outline,
                       ),
                     ],
                   ),
@@ -241,7 +262,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('فهمت ذلك')),
+            TextButton(
+              onPressed: () => Navigator.pop(context), 
+              child: const Text('فهمت فلسفة النظام وآلية عمله', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
           ],
         ),
       ),
@@ -250,16 +274,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHelpContent(String title, String description, IconData icon) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Icon(icon, size: 50, color: const Color(0xFF4F46E5)),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
+          Icon(icon, size: 60, color: const Color(0xFF4F46E5)).animate().scale(duration: 400.ms),
+          const SizedBox(height: 20),
           Text(
-            description,
-            style: const TextStyle(fontSize: 14, height: 1.6, color: Color(0xFF64748B)),
+            title, 
             textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xFF1E293B)),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: Text(
+              description,
+              style: const TextStyle(fontSize: 15, height: 1.8, color: Color(0xFF475569)),
+              textAlign: TextAlign.right, // Proper Arabic alignment
+            ),
           ),
         ],
       ),
