@@ -100,15 +100,6 @@ class SettingsScreen extends StatelessWidget {
               [
                 _buildSettingTile(
                   context,
-                  'دليل الاستخدام والتعليمات',
-                  'شرح مفصل لكيفية استخدام أقسام النظام',
-                  Ionicons.help_buoy_outline,
-                  const Color(0xFF8B5CF6),
-                  () => _showInstructionsDialog(context),
-                ),
-                const SizedBox(height: 16),
-                _buildSettingTile(
-                  context,
                   'نظام الخزينة والبطاقات المالية',
                   'الإصدار 1.2.5 - تم التحديث بنجاح',
                   Ionicons.information_circle_outline,
@@ -119,80 +110,6 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.1),
-      ),
-    );
-  }
-
-  void _showInstructionsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => DefaultTabController(
-        length: 3,
-        child: AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          title: const Text('دليل الاستخدام المطور', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-          content: SizedBox(
-            width: 500,
-            height: 400,
-            child: Column(
-              children: [
-                const TabBar(
-                  labelColor: Color(0xFF4F46E5),
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Color(0xFF4F46E5),
-                  tabs: [
-                    Tab(text: 'الخزائن'),
-                    Tab(text: 'العمليات'),
-                    Tab(text: 'البطاقات'),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      _buildHelpContent(
-                        'إدارة الخزائن',
-                        'الخزائن هي الأوعية المالية الرئيسية في النظام. يمكنك إنشاء خزنة لكل عملة أو لكل غرض (خزنة رئيسية، محل، مصروفات شخصية).\n\n• أهمية الخزنة: تتبع الرصيد الفعلي المتاح.\n• التحويلات: يمكنك نقل الأموال بين الخزائن بسهولة.',
-                        Ionicons.wallet_outline,
-                      ),
-                      _buildHelpContent(
-                        'إدارة العمليات',
-                        'هذا القسم يسجل حركات الأموال (إيداع، سحب، تحويل).\n\n• الإيداع: زيادة رصيد الخزنة.\n• السحب: تسجيل المصروفات.\n• التحويل: الربط بين خزنتين.\n• التتبع: يمكنك البحث عن أي عملية سابقة بالتاريخ والنوع.',
-                        Ionicons.swap_horizontal_outline,
-                      ),
-                      _buildHelpContent(
-                        'إدارة البطاقات',
-                        'البطاقات هي بطاقات الدفع أو الفيزا المرتبطة بخزنة معينة.\n\n• الربط: كل بطاقة تسحب من رصيد خزنة محددة.\n• الاستخدام: لتسهيل إدارة البطاقات البنكية ومعرفة رصيد كل منها بشكل منفصل داخل الخزنة الواحدة.',
-                        Ionicons.card_outline,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('فهمت ذلك')),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHelpContent(String title, String description, IconData icon) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Icon(icon, size: 50, color: const Color(0xFF4F46E5)),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
-          Text(
-            description,
-            style: const TextStyle(fontSize: 14, height: 1.6, color: Color(0xFF64748B)),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
