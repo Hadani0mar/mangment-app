@@ -5,6 +5,7 @@ import 'transactions_screen.dart';
 import 'cards_screen.dart';
 import 'settings_screen.dart';
 import 'operations_hub_screen.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -79,6 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildSidebarItem(4, Icons.credit_card_rounded, 'البطاقات البنكية'),
                   const Spacer(),
                   _buildSidebarItem(5, Icons.settings_rounded, 'الإعدادات'),
+                  const SizedBox(height: 12),
+                  _buildSidebarAction(Ionicons.help_buoy_outline, 'دليل التعليمات', () => _showInstructionsDialog(context)),
                   const SizedBox(height: 20),
                   // App Version Info
                   Text(
@@ -159,6 +162,107 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ).animate(target: isSelected ? 1 : 0).scale(begin: const Offset(1,1), end: const Offset(1.05, 1.05), duration: 200.ms),
+    );
+  }
+
+  Widget _buildSidebarAction(IconData icon, String label, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.white.withOpacity(0.5), size: 24),
+            const SizedBox(width: 16),
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showInstructionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => DefaultTabController(
+        length: 3,
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: const Text('دليل الاستخدام المطور', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          content: SizedBox(
+            width: 500,
+            height: 400,
+            child: Column(
+              children: [
+                const TabBar(
+                  labelColor: Color(0xFF4F46E5),
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Color(0xFF4F46E5),
+                  tabs: [
+                    Tab(text: 'الخزائن'),
+                    Tab(text: 'العمليات'),
+                    Tab(text: 'البطاقات'),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      _buildHelpContent(
+                        'إدارة الخزائن',
+                        'الخزائن هي الأوعية المالية الرئيسية في النظام. يمكنك إنشاء خزنة لكل عملة أو لكل غرض (خزنة رئيسية، محل، مصروفات شخصية).\n\n• أهمية الخزنة: تتبع الرصيد الفعلي المتاح.\n• التحويلات: يمكنك نقل الأموال بين الخزائن بسهولة.',
+                        Ionicons.wallet_outline,
+                      ),
+                      _buildHelpContent(
+                        'إدارة العمليات',
+                        'هذا قسم يسجل حركات الأموال (إيداع، سحب، تحويل).\n\n• الإيداع: زيادة رصيد الخزنة.\n• السحب: تسجيل المصروفات.\n• التحويل: الربط بين خزنتين.\n• التتبع: يمكنك البحث عن أي عملية سابقة بالتاريخ والنوع.',
+                        Ionicons.swap_horizontal_outline,
+                      ),
+                      _buildHelpContent(
+                        'إدارة البطاقات',
+                        'البطاقات هي بطاقات الدفع أو الفيزا المرتبطة بخزنة معينة.\n\n• الربط: كل بطاقة تسحب من رصيد خزنة محددة.\n• الاستخدام: لتسهيل إدارة البطاقات البنكية ومعرفة رصيد كل منها بشكل منفصل داخل الخزنة الواحدة.',
+                        Ionicons.card_outline,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('فهمت ذلك')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHelpContent(String title, String description, IconData icon) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Icon(icon, size: 50, color: const Color(0xFF4F46E5)),
+          const SizedBox(height: 16),
+          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 12),
+          Text(
+            description,
+            style: const TextStyle(fontSize: 14, height: 1.6, color: Color(0xFF64748B)),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
